@@ -1,5 +1,6 @@
 // script.js (Your client-side JavaScript)
 document.addEventListener('DOMContentLoaded', () => {
+    // ... (all your existing code before the downloadPdfButton listener) ...
     const csvFileInput = document.getElementById('csvFileInput');
     const prevButton = document.getElementById('prevButton');
     const nextButton = document.getElementById('nextButton');
@@ -9,12 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const trlNumDisplay = document.getElementById('trlNumDisplay');
     const techTitleDisplay = document.getElementById('techTitleDisplay');
     const innovatorsDisplay = document.getElementById('innovatorsDisplay');
-    const docketDisplay = document.getElementById('docketDisplay');
+    const docketDisplay = document.getElementById('docketDisplay'); // Keep this if still displayed elsewhere
     const patentStatusDisplay = document.getElementById('patentStatusDisplay');
     const descriptionDisplay = document.getElementById('descriptionDisplay');
 
-    const featuresUl = document.querySelector('.features .list-content ul'); 
-    const advantagesUl = document.querySelector('.advantages .list-content ul'); 
+    const featuresUl = document.querySelector('.features .list-content ul');
+    const advantagesUl = document.querySelector('.advantages .list-content ul');
     const useCasesUl = document.querySelector('.use-cases .list-content ul');
     const techSpecsUl = document.querySelector('.Theme .technological-specs .list-content ul');
     const domainUl = document.querySelector('.Theme .domain .list-content ul');
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const qrCodeContainer = document.getElementById('qrCodeContainer');
 
     const imageUploadInput = document.getElementById('imageUploadInput');
-    
+
     let csvData = [];
     let currentRecordIndex = -1;
     let uploadedImagesPerRow = {}; // Stores DataURLs for uploaded images, keyed by record index
@@ -49,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function parseCSV(csvText) {
         const lines = csvText.trim().split('\n');
         if (lines.length === 0) return [];
-        
+
         const headers = lines[0].split(',').map(header => header.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
-        
+
         const data = [];
         for (let i = 1; i < lines.length; i++) {
             const values = [];
@@ -99,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteBtn.setAttribute('aria-label', 'Delete item');
         deleteBtn.title = 'Delete item';
         li.appendChild(deleteBtn);
-        
+
         ulElement.appendChild(li);
         if (isPlaceholder) {
             li.classList.add('placeholder-item');
@@ -129,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createImageElementWrapper(imageUrl, isCsvImage) {
         const wrapper = document.createElement('div');
         wrapper.className = 'image-item-wrapper';
-    
+
         const img = document.createElement('img');
         img.src = imageUrl;
         img.alt = "Technology Image";
@@ -139,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.alt = `Failed to load: ${imageUrl.substring(0,50)}...`;
             // The wrapper's background will act as a placeholder
         };
-    
+
         const removeBtn = document.createElement('button');
         removeBtn.className = 'remove-image-btn';
         removeBtn.innerHTML = '&times;'; // 'x' symbol
@@ -148,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.stopPropagation(); // Prevent triggering other listeners if any
             handleRemoveImage(imageUrl, isCsvImage);
         };
-    
+
         wrapper.appendChild(img);
         wrapper.appendChild(removeBtn);
         return wrapper;
@@ -170,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         // Re-render the current record to reflect changes including image layout
-        displayRecord(currentRecordIndex); 
+        displayRecord(currentRecordIndex);
     }
 
 
@@ -187,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             docketDisplay.textContent = 'N/A';
             patentStatusDisplay.textContent = 'N/A';
             descriptionDisplay.textContent = 'N/A';
-            
+
             if(featuresUl) populateList(featuresUl, null);
             if(advantagesUl) populateList(advantagesUl, null);
             if(useCasesUl) populateList(useCasesUl, null);
@@ -207,18 +208,18 @@ document.addEventListener('DOMContentLoaded', () => {
         trlNumDisplay.textContent = record.TRLLevel || 'N/A';
         techTitleDisplay.textContent = record.Title || 'Technology Title';
         innovatorsDisplay.textContent = record.Innovators ? record.Innovators.split(';').map(s => s.trim()).join(', ') : 'N/A';
-        
-        docketDisplay.textContent = record.Docket || 'N/A'; 
+
+        docketDisplay.textContent = record.Docket || 'N/A';
         patentStatusDisplay.textContent = record.PatentStatus || 'N/A';
         descriptionDisplay.textContent = record.DetailedDescription || 'N/A';
 
-        if(featuresUl) populateList(featuresUl, record.Advantages); 
-        if(advantagesUl) populateList(advantagesUl, record.Applications); 
+        if(featuresUl) populateList(featuresUl, record.Advantages);
+        if(advantagesUl) populateList(advantagesUl, record.Applications);
         if(useCasesUl) populateList(useCasesUl, record.UseCases);
         if(techSpecsUl) populateList(techSpecsUl, record.TechnicalSpecifications);
         if(domainUl) populateList(domainUl, record.Domain);
         if(themeListUl) populateList(themeListUl, record.Theme);
-        
+
         // Process CSV images
         const csvImageUrlsFromRecord = (record.Images || '')
             .split(',')
@@ -233,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Process uploaded images
         const uploadedImageObjects = (uploadedImagesPerRow[index] || [])
             .map(url => ({ url: url, isCsv: false }));
-        
+
         const combinedImageObjects = [...filteredCsvImages, ...uploadedImageObjects];
 
         if (combinedImageObjects.length > 0) {
@@ -295,14 +296,14 @@ document.addEventListener('DOMContentLoaded', () => {
         imageUploadInput.addEventListener('change', async (event) => {
             if (currentRecordIndex < 0 || currentRecordIndex >= csvData.length) {
                 alert("Please load a CSV and select a record before uploading images.");
-                event.target.value = ''; 
+                event.target.value = '';
                 return;
             }
             const files = Array.from(event.target.files);
             if (!files.length) return;
-            
+
             // Replace previous uploads for this record with new ones
-            uploadedImagesPerRow[currentRecordIndex] = []; 
+            uploadedImagesPerRow[currentRecordIndex] = [];
             const fileReadPromises = files.map(file => {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -333,9 +334,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (ulElement) {
                     const defaultTextForNewItem = ulElement.dataset.defaultText || "New item - edit here";
                     let textForNewItem = "Edit this item..."; // Default if not replacing placeholder
-                    
+
                     // Check if the list is empty or only contains a placeholder
-                    if (ulElement.children.length === 0 || 
+                    if (ulElement.children.length === 0 ||
                         (ulElement.children.length === 1 && ulElement.firstElementChild.classList.contains('placeholder-item'))) {
                         ulElement.innerHTML = ''; // Clear placeholder or empty list
                         textForNewItem = defaultTextForNewItem; // Use default text for the first real item
@@ -353,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 }
-            } 
+            }
             else if (target.classList.contains('delete-list-item-btn') || target.closest('.delete-list-item-btn')) {
                 event.preventDefault();
                 const actualButton = target.classList.contains('delete-list-item-btn') ? target : target.closest('.delete-list-item-btn');
@@ -370,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (prevButton) { 
+    if (prevButton) {
         prevButton.addEventListener('click', () => {
             if (currentRecordIndex > 0) {
                 displayRecord(currentRecordIndex - 1);
@@ -378,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (nextButton) { 
+    if (nextButton) {
         nextButton.addEventListener('click', () => {
             if (currentRecordIndex < csvData.length - 1) {
                 displayRecord(currentRecordIndex + 1);
@@ -386,7 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (downloadPdfButton) { 
+    if (downloadPdfButton) {
         downloadPdfButton.addEventListener('click', () => {
             if (csvData.length === 0 || currentRecordIndex < 0 || currentRecordIndex >= csvData.length) {
                 alert("Please load data from a CSV file and ensure a record is selected.");
@@ -401,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (controlsContainer) controlsContainer.style.display = 'none';
             if (boldTooltip) boldTooltip.style.display = 'none';
-            
+
             // Hide remove buttons before printing
             const removeImageButtons = element.querySelectorAll('.remove-image-btn');
             removeImageButtons.forEach(btn => btn.style.display = 'none');
@@ -411,18 +412,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const elementScrollHeightPx = element.scrollHeight;
             const elementOffsetWidthPx = element.offsetWidth;
-            const pxToMmFactor = 25.4 / 96.0; 
+            const pxToMmFactor = 25.4 / 96.0;
             const pdfPageHeightMm = elementScrollHeightPx * pxToMmFactor;
-            const pdfPageWidthMm = 210; 
+            const pdfPageWidthMm = 210;
 
             const currentRecord = csvData[currentRecordIndex];
-            
-            const docketValue = currentRecord.Docket || 'NoDocketInfo'; 
-            
+
+            // MODIFICATION START: Use Title for filename
+            const titleValue = currentRecord.Title || 'Untitled_Technology'; // Use Title, fallback if empty
+            // MODIFICATION END
+
             const sanitizeForFilename = (name) => String(name).replace(/[^a-zA-Z0-9_.-]/g, '_').replace(/\s+/g, '_');
-            
-            const sanitizedIdentifier = sanitizeForFilename(docketValue);
-            
+
+            // MODIFICATION START: Sanitize titleValue for filename
+            const sanitizedIdentifier = sanitizeForFilename(titleValue);
+            // MODIFICATION END
+
             const newFilename = `${sanitizedIdentifier}.pdf`;
 
             const opt = {
@@ -455,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 jsPDF: {
                     unit: 'mm',
-                    format: [pdfPageWidthMm, pdfPageHeightMm], 
+                    format: [pdfPageWidthMm, pdfPageHeightMm],
                     orientation: 'portrait'
                 }
             };
@@ -481,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (a4Sheet && boldTooltip && makeBoldButton) {
         a4Sheet.addEventListener('mouseup', (e) => {
-            if (e.target === boldTooltip || boldTooltip.contains(e.target) || 
+            if (e.target === boldTooltip || boldTooltip.contains(e.target) ||
                 (makeBoldButton && e.target === makeBoldButton) ) {
                 return;
             }
@@ -493,7 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (container.nodeType !== Node.ELEMENT_NODE) {
                         container = container.parentNode;
                     }
-                    if (container) { 
+                    if (container) {
                         while (container && container !== document.body) {
                             if (container.isContentEditable && a4Sheet.contains(container)) {
                                 isEditableInSheet = true;
@@ -514,7 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (left + boldTooltip.offsetWidth > window.innerWidth + window.scrollX) {
                         left = window.innerWidth + window.scrollX - boldTooltip.offsetWidth - 5;
                     }
-                    
+
                     boldTooltip.style.left = `${left}px`;
                     boldTooltip.style.top = `${top}px`;
                     boldTooltip.style.display = 'flex';
@@ -529,13 +534,13 @@ document.addEventListener('DOMContentLoaded', () => {
         makeBoldButton.addEventListener('click', () => {
             document.execCommand('bold', false, null);
             const selection = window.getSelection();
-            if (selection) selection.removeAllRanges(); 
+            if (selection) selection.removeAllRanges();
             boldTooltip.style.display = 'none';
         });
 
         document.addEventListener('mousedown', (e) => {
             if (boldTooltip && boldTooltip.style.display === 'flex') {
-                 if (!boldTooltip.contains(e.target) && e.target !== makeBoldButton) { 
+                 if (!boldTooltip.contains(e.target) && e.target !== makeBoldButton) {
                     let currentSelection = window.getSelection();
                      if (!currentSelection || currentSelection.isCollapsed || currentSelection.toString().trim() === '') {
                          boldTooltip.style.display = 'none';
@@ -563,10 +568,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Clear previous QR code if generating a new one in the general section
             // If QR codes were record-specific, this clearing would be in displayRecord
-            qrCodeContainer.innerHTML = ''; 
-            
+            qrCodeContainer.innerHTML = '';
+
             const singleQrItemDiv = document.createElement('div');
-            singleQrItemDiv.className = 'qr-code-item'; 
+            singleQrItemDiv.className = 'qr-code-item';
             try {
                 if (typeof QRCode === 'function') {
                     new QRCode(singleQrItemDiv, {
@@ -578,7 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         correctLevel: QRCode.CorrectLevel.H
                     });
                     qrCodeContainer.appendChild(singleQrItemDiv);
-                    qrLinkInput.value = ''; 
+                    qrLinkInput.value = '';
                 } else {
                     alert("QR Code library not loaded. Please check your HTML file.");
                 }
