@@ -1,35 +1,80 @@
+html {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+html::-webkit-scrollbar {
+  display: none; 
+}
+
 body {
-    background-color: #f0f0f0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    background-color: #f5f5f7;
     margin: 0;
-    padding: 20px;
+    padding: 0;
     min-height: 100vh;
     font-family: 'Inter', sans-serif;
     color: #333;
     box-sizing: border-box;
+
 }
 
+.main-container {
+    display: flex;
+    padding: 20px;
+    gap: 30px;
+    min-height: calc(100vh - 40px);
+    max-width: 1600px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+
 .controls-container {
-    width: 210mm;
-    margin-bottom: 20px;
-    padding: 15px;
+    width: 600px;
+    flex-shrink: 0;
+    padding: 20px;
     background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
+}
+
+.controls-container::-webkit-scrollbar {
+    display: none;
+}
+
+
+.controls-title {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+    text-align: center;
 }
 
 .control-group {
-    padding: 15px;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    background-color: #f9f9f9;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #f9f9fb;
+    border: 1px solid #eaeaec;
+    transition: box-shadow 0.2s ease;
+}
+
+.control-group:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .control-group-title {
@@ -39,67 +84,92 @@ body {
     font-weight: 600;
     color: #333;
     padding-bottom: 8px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #eaeaec;
 }
 
 .csv-controls {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .csv-label {
     font-weight: 500;
     font-size: 14px;
     color: #444;
+    margin-bottom: 4px;
 }
 
 .csv-input {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    width: 100%;
     box-sizing: border-box;
+    transition: border-color 0.2s ease;
 }
-#imageUploadInput {
-    padding: 5px;
+
+.csv-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+}
+
+.file-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.upload-note {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
 }
 
 .navigation-controls {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
 }
 
 .record-indicator {
     font-size: 14px;
     color: #555;
-    margin: 0 15px;
     font-weight: 500;
+    text-align: center;
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    padding: 6px 10px;
+    border-radius: 4px;
 }
 
 .button-container {
-    width: auto;
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0;
-    box-sizing: border-box;
+    justify-content: center;
+    width: 100%;
 }
 
 .action-button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 16px;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     border-radius: 6px;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.1s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 .action-button:hover {
@@ -122,8 +192,131 @@ body {
 
 .nav-button {
     min-width: 80px;
+    flex: 1;
 }
 
+.download-button {
+    background-color: #28a745;
+    width: 100%;
+}
+
+.download-button:hover {
+    background-color: #218838;
+}
+
+.button-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.qr-generator-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#qrLinkInput {
+    width: 100%;
+}
+
+#generateQrButton {
+    align-self: flex-end;
+}
+
+/* Add these new styles to your style.css file */
+
+.records-table-container {
+    max-height: 250px; /* Adjust as needed */
+    overflow-y: auto;
+    border: 1px solid #eaeaec;
+    border-radius: 6px;
+    margin-top: 8px; /* Add some space if needed */
+}
+
+#recordsTablePlaceholder {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.records-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px; /* Slightly smaller font for the table */
+}
+
+.records-table-container th,
+.records-table-container td {
+    text-align: left;
+    padding: 8px 10px; /* Adjust padding */
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap; /* Prevent text wrapping in cells initially */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+    max-width: 150px; /* Max width for individual cells, adjust as needed */
+}
+.records-table-container td:first-child { /* Tech Title column */
+    max-width: 200px; /* Allow more space for title */
+}
+
+
+.records-table-container th {
+    background-color: #f9f9fb;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 1; /* Ensure header stays above scrolling content */
+}
+
+.records-table-container tr:hover td { /* Target td for consistent hover background */
+    background-color: #f0f5ff;
+    cursor: pointer;
+}
+
+.records-table-container tr.selected-record td { /* Target td for consistent selected background */
+    background-color: #e0e9ff; /* A slightly more prominent selection color */
+    font-weight: 500;
+}
+
+/* Modify existing .navigation-controls if you want to repurpose the space, */
+/* or just ensure its removal doesn't break layout. */
+/* Since it's removed from HTML, no CSS changes are strictly needed for it, */
+/* but ensure other elements flow correctly. */
+
+/* Optional: Adjust overall controls container height if the table makes it too tall */
+/* .controls-container {
+    max-height: calc(100vh - 40px); /* This existing rule should still work well */
+/* } */
+
+/* Remove style for navigation-controls as it is removed */
+/*
+.navigation-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.record-indicator {
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+    text-align: center;
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+.nav-button {
+    min-width: 80px;
+    flex: 1;
+}
+*/
+
+
+/* ===== A4 SHEET STYLING (UNCHANGED) ===== */
 .a4-sheet {
     background-color: white;
     width: 210mm;
@@ -388,16 +581,6 @@ body {
     color: red;
 }
 
-.qr-generator-section {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-#qrLinkInput { 
-    flex-grow: 1;
-}
-
 #qrCodeContainer {
     margin-top: 15px;
     display: flex;
@@ -516,12 +699,31 @@ body {
     height: 180px; 
 }
 
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .controls-container {
+        width: 100%;
+        max-width: 600px;
+        position: static;
+        margin-bottom: 30px;
+    }
+}
 
 @media print {
     html, body {
         margin: 0;
         padding: 0;
         background-color: white;
+    }
+
+    .main-container {
+        display: block;
+        padding: 0;
     }
 
     .controls-container {
@@ -539,14 +741,14 @@ body {
     }
 
     .a4-sheet {
-        width: 210mm;
-        height: 297mm; 
-        min-height: 0; 
-        margin: 0;
-        padding: 20mm; 
+        width: 210mm; /* Or 100% if you want it to adapt to a parent, then html2pdf controls PDF width */
+        /* REMOVE OR COMMENT OUT THIS LINE: height: 297mm; */
+        /* Let content determine the height for html2canvas capture */
+        padding: 20mm; /* Your padding is fine, it's internal to the element */
         box-shadow: none;
         box-sizing: border-box;
-        page-break-after: auto; 
+        /* min-height and page-break-after are generally fine */
+        min-height: initial; /* Or remove if not specifically needed for print layout */
     }
     
     .document-header {

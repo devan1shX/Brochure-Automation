@@ -11,150 +11,159 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
-    <div class="controls-container">
-        <div class="control-group">
-            <h3 class="control-group-title">Data Source</h3>
-            <div class="csv-controls">
-                <label for="csvFileInput" class="csv-label">Load Data from CSV:</label>
-                <input type="file" id="csvFileInput" accept=".csv" class="csv-input">
-            </div>
-        </div>
+    <div class="main-container">
+        <div class="controls-container">
+            <h2 class="controls-title">Brochure Controls</h2>
 
-        <div class="control-group">
-            <h3 class="control-group-title">Record Navigation</h3>
-            <div class="navigation-controls">
-                <button id="prevButton" class="action-button nav-button" disabled>&laquo; Prev</button>
-                <span id="recordIndicator" class="record-indicator">No data loaded</span>
-                <button id="nextButton" class="action-button nav-button" disabled>Next &raquo;</button>
+            <div class="control-group">
+                <h3 class="control-group-title">Data Source</h3>
+                <div class="csv-controls">
+                    <label for="csvFileInput" class="csv-label">Load Data from CSV/Excel:</label>
+                    <input type="file" id="csvFileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                </div>
             </div>
-        </div>
 
-        <div class="control-group">
-            <h3 class="control-group-title">Image Management</h3>
-            <label for="imageUploadInput" class="csv-label">Upload Images for Current Record (replaces previous uploads for this record):</label>
-            <input type="file" id="imageUploadInput" multiple accept="image/*" class="csv-input">
-        </div>
-
-        <div class="control-group">
-            <h3 class="control-group-title">Tools</h3>
-            <div class="qr-generator-section">
-                <input type="text" id="qrLinkInput" class="csv-input" placeholder="Enter website link for QR code">
-                <button id="generateQrButton" class="action-button">Generate QR</button>
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <h3 class="control-group-title">Export</h3>
-            <div class="button-container">
-                <button id="downloadPdfButton" class="action-button">Download as PDF</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="a4-sheet">
-        <div id="bold-tooltip" style="display:none; position:absolute; background-color:black; color:white; padding:5px; border-radius:3px; z-index:1000;">
-            <button id="makeBoldButton" style="background:none; border:none; color:white; cursor:pointer;">Bold</button>
-        </div>
-        <div class="document-header">
-            <div class="header-left">
-                <div class="trl-section">
-                    <div class="logo-placeholder">
-                        <img src="./assets/iiitd_logo.png" alt="IIITD Logo"/>
+            <div class="control-group">
+                <h3 class="control-group-title">Loaded Records</h3>
+                <div id="recordsTableContainer" class="records-table-container">
+                    <p id="recordsTablePlaceholder">No data loaded. Upload a file to see records.</p>
                     </div>
-                    <div class="trl-details">TRL: <span class="trl-value-number" id="trlNumDisplay" contenteditable="true">N/A</span></div>
-                </div>
-                <div class="tech-title-section">
-                    <h1 id="techTitleDisplay" contenteditable="true">Technology Title</h1>
+            </div>
+
+            <div class="control-group">
+                <h3 class="control-group-title">Image Management</h3>
+                <label for="imageUploadInput" class="csv-label">Upload Images for Current Record:</label>
+                <div class="file-upload-wrapper">
+                    <input type="file" id="imageUploadInput" multiple accept="image/*" class="csv-input">
+                    <p class="upload-note">Images will replace previous uploads for this record</p>
                 </div>
             </div>
-            <div class="header-right">
-                <img src="./assets/iiitd_building.jpeg" alt="Header Image Placeholder">
+
+            <div class="control-group">
+                <h3 class="control-group-title">QR Code Generator</h3>
+                <div class="qr-generator-section">
+                    <input type="text" id="qrLinkInput" class="csv-input" placeholder="Enter website link for QR code">
+                    <button id="generateQrButton" class="action-button">Generate QR</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3 class="control-group-title">Export</h3>
+                <div class="button-container">
+                    <button id="downloadPdfButton" class="action-button download-button" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download as PDF
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="main-content">
-            <div class="innovator-docket-patent">
-                <p><strong>Innovator:</strong> <span id="innovatorsDisplay" contenteditable="true">N/A</span></p>
-                <p><strong>Docket:</strong> <span id="docketDisplay" contenteditable="true">N/A</span></p>
-                <p><strong>Patent:</strong> <span id="patentStatusDisplay" contenteditable="true">N/A</span></p>
-            </div>
-            <div class="description">
-                <div class="title-with-line">
-                    <h2>Description</h2>
-                </div>
-                <div class="description-content">
-                    <p id="descriptionDisplay" contenteditable="true">N/A</p>
-                </div>
-            </div>
-            <div class="features list-section-container">
-                <div class="title-without-line section-title-container">
-                    <h2>Features</h2> <button class="add-list-item-btn" data-list-target-selector=".features .list-content ul" aria-label="Add Feature Item" title="Add Feature Item">+</button>
-                </div>
-                <div class="list-content">
-                    <ul data-default-text="New feature - edit here"></ul>
-                </div>
-            </div>
 
-            <div id="featuresImagesContainer" class="image-container"></div>
-
-            <div class="advantages list-section-container">
-                <div class="title-with-line section-title-container">
-                    <h2>Applications</h2> <button class="add-list-item-btn" data-list-target-selector=".advantages .list-content ul" aria-label="Add Advantage Item" title="Add Advantage Item">+</button>
+        <div class="a4-sheet">
+            <div id="bold-tooltip" style="display:none; position:absolute; background-color:black; color:white; padding:5px; border-radius:3px; z-index:1000;">
+                <button id="makeBoldButton" style="background:none; border:none; color:white; cursor:pointer;">Bold</button>
+            </div>
+            <div class="document-header">
+                <div class="header-left">
+                    <div class="trl-section">
+                        <div class="logo-placeholder">
+                            <img src="./assets/iiitd_logo.png" alt="IIITD Logo"/>
+                        </div>
+                        <div class="trl-details">TRL: <span class="trl-value-number" id="trlNumDisplay" contenteditable="true">N/A</span></div>
+                    </div>
+                    <div class="tech-title-section">
+                        <h1 id="techTitleDisplay" contenteditable="true">Technology Title</h1>
+                    </div>
                 </div>
-                <div class="list-content">
-                    <ul data-default-text="New application - edit here"></ul>
+                <div class="header-right">
+                    <img src="./assets/iiitd_building.jpeg" alt="Header Image Placeholder">
                 </div>
             </div>
-            <div class="use-cases list-section-container">
-                <div class="title-without-line section-title-container">
-                    <h2>Use-cases</h2> <button class="add-list-item-btn" data-list-target-selector=".use-cases .list-content ul" aria-label="Add Use-case Item" title="Add Use-case Item">+</button>
+            <div class="main-content">
+                <div class="innovator-docket-patent">
+                    <p><strong>Innovator:</strong> <span id="innovatorsDisplay" contenteditable="true">N/A</span></p>
+                    <p><strong>Docket:</strong> <span id="docketDisplay" contenteditable="true">N/A</span></p>
+                    <p><strong>Patent:</strong> <span id="patentStatusDisplay" contenteditable="true">N/A</span></p>
                 </div>
-                <div class="list-content">
-                    <ul data-default-text="New use-case - edit here"></ul>
+                <div class="description">
+                    <div class="title-with-line">
+                        <h2>Description</h2>
+                    </div>
+                    <div class="description-content">
+                        <p id="descriptionDisplay" contenteditable="true">N/A</p>
+                    </div>
                 </div>
-            </div>
-            <div class="Theme">
-                <div class="title-with-line section-title-container">
-                    <h2>Theme</h2>
-                </div>
-                <div class="technological-specs list-section-container">
+                <div class="features list-section-container">
                     <div class="title-without-line section-title-container">
-                        <h3>Technological Specifications</h3> <button class="add-list-item-btn" data-list-target-selector=".technological-specs .list-content ul" aria-label="Add Tech Spec Item" title="Add Tech Spec Item">+</button>
+                        <h2>Features</h2> <button class="add-list-item-btn" data-list-target-selector=".features .list-content ul" aria-label="Add Feature Item" title="Add Feature Item">+</button>
                     </div>
                     <div class="list-content">
-                        <ul data-default-text="New tech spec - edit here"></ul>
+                        <ul data-default-text="New feature - edit here"></ul>
                     </div>
                 </div>
-                <div class="domain list-section-container">
-                    <div class="title-without-line section-title-container">
-                        <h3>Domain</h3> <button class="add-list-item-btn" data-list-target-selector=".domain .list-content ul" aria-label="Add Domain Item" title="Add Domain Item">+</button>
-                    </div>
-                    <div class="list-content">
-                        <ul data-default-text="New domain - edit here"></ul>
-                    </div>
-                </div>
-                <div class="theme list-section-container"> 
-                    <div class="title-without-line section-title-container">
-                        <h3>Theme</h3> <button class="add-list-item-btn" data-list-target-selector=".Theme .theme .list-content ul" aria-label="Add Theme Item" title="Add Theme Item">+</button>
-                    </div>
-                    <div class="list-content">
-                        <ul data-default-text="New theme detail - edit here"></ul>
-                    </div>
-                </div>
-            </div>
-            <div class="reach-out">
-                <div class="title-with-line section-title-container">
-                    <h2>Reach Out</h2> 
-                </div>
-                <div class="react-out-content">
-                    <p>For questions, comments, or licensing, email us at <a href="mailto:alok@iiitd.ac.in" class="contact-email" target="_blank" rel="noopener noreferrer">alok@iiitd.ac.in</a>.</p>
-                    <p>For more information, scan the following -</p>
-                    <div id="qrCodeContainer" class="qr-code-display-area"></div>
-                </div>
-            </div>
 
-            <div id="endOfDocumentImagesContainer" class="image-container"></div>
+                <div id="featuresImagesContainer" class="image-container"></div>
+
+                <div class="advantages list-section-container">
+                    <div class="title-with-line section-title-container">
+                        <h2>Applications</h2> <button class="add-list-item-btn" data-list-target-selector=".advantages .list-content ul" aria-label="Add Advantage Item" title="Add Advantage Item">+</button>
+                    </div>
+                    <div class="list-content">
+                        <ul data-default-text="New application - edit here"></ul>
+                    </div>
+                </div>
+                <div class="use-cases list-section-container">
+                    <div class="title-without-line section-title-container">
+                        <h2>Use-cases</h2> <button class="add-list-item-btn" data-list-target-selector=".use-cases .list-content ul" aria-label="Add Use-case Item" title="Add Use-case Item">+</button>
+                    </div>
+                    <div class="list-content">
+                        <ul data-default-text="New use-case - edit here"></ul>
+                    </div>
+                </div>
+                <div class="Theme">
+                    <div class="title-with-line section-title-container">
+                        <h2>Theme</h2>
+                    </div>
+                    <div class="technological-specs list-section-container">
+                        <div class="title-without-line section-title-container">
+                            <h3>Technological Specifications</h3> <button class="add-list-item-btn" data-list-target-selector=".technological-specs .list-content ul" aria-label="Add Tech Spec Item" title="Add Tech Spec Item">+</button>
+                        </div>
+                        <div class="list-content">
+                            <ul data-default-text="New tech spec - edit here"></ul>
+                        </div>
+                    </div>
+                    <div class="domain list-section-container">
+                        <div class="title-without-line section-title-container">
+                            <h3>Domain</h3> <button class="add-list-item-btn" data-list-target-selector=".domain .list-content ul" aria-label="Add Domain Item" title="Add Domain Item">+</button>
+                        </div>
+                        <div class="list-content">
+                            <ul data-default-text="New domain - edit here"></ul>
+                        </div>
+                    </div>
+                    <div class="theme list-section-container">
+                        <div class="title-without-line section-title-container">
+                            <h3>Theme</h3> <button class="add-list-item-btn" data-list-target-selector=".Theme .theme .list-content ul" aria-label="Add Theme Item" title="Add Theme Item">+</button>
+                        </div>
+                        <div class="list-content">
+                            <ul data-default-text="New theme detail - edit here"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="reach-out">
+                    <div class="title-with-line section-title-container">
+                        <h2>Reach Out</h2>
+                    </div>
+                    <div class="react-out-content">
+                        <p>For questions, comments, or licensing, email us at <a href="mailto:alok@iiitd.ac.in" class="contact-email" target="_blank" rel="noopener noreferrer">alok@iiitd.ac.in</a>.</p>
+                        <p>For more information, scan the following -</p>
+                        <div id="qrCodeContainer" class="qr-code-display-area"></div>
+                    </div>
+                </div>
+
+                <div id="endOfDocumentImagesContainer" class="image-container"></div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
