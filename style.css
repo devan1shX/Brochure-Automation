@@ -223,14 +223,13 @@ body {
     align-self: flex-end;
 }
 
-/* Add these new styles to your style.css file */
 
 .records-table-container {
-    max-height: 250px; /* Adjust as needed */
+    max-height: 250px; 
     overflow-y: auto;
     border: 1px solid #eaeaec;
     border-radius: 6px;
-    margin-top: 8px; /* Add some space if needed */
+    margin-top: 8px; 
 }
 
 #recordsTablePlaceholder {
@@ -244,21 +243,21 @@ body {
 .records-table-container table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px; /* Slightly smaller font for the table */
+    font-size: 13px; 
 }
 
 .records-table-container th,
 .records-table-container td {
     text-align: left;
-    padding: 8px 10px; /* Adjust padding */
+    padding: 8px 10px; 
     border-bottom: 1px solid #f0f0f0;
-    white-space: nowrap; /* Prevent text wrapping in cells initially */
+    white-space: nowrap; 
     overflow: hidden;
-    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
-    max-width: 150px; /* Max width for individual cells, adjust as needed */
+    text-overflow: ellipsis; 
+    max-width: 150px; 
 }
-.records-table-container td:first-child { /* Tech Title column */
-    max-width: 200px; /* Allow more space for title */
+.records-table-container td:first-child { 
+    max-width: 200px;
 }
 
 
@@ -267,56 +266,19 @@ body {
     font-weight: 600;
     position: sticky;
     top: 0;
-    z-index: 1; /* Ensure header stays above scrolling content */
+    z-index: 1; 
 }
 
-.records-table-container tr:hover td { /* Target td for consistent hover background */
+.records-table-container tr:hover td { 
     background-color: #f0f5ff;
     cursor: pointer;
 }
 
-.records-table-container tr.selected-record td { /* Target td for consistent selected background */
-    background-color: #e0e9ff; /* A slightly more prominent selection color */
+.records-table-container tr.selected-record td { 
+    background-color: #e0e9ff; 
     font-weight: 500;
 }
 
-/* Modify existing .navigation-controls if you want to repurpose the space, */
-/* or just ensure its removal doesn't break layout. */
-/* Since it's removed from HTML, no CSS changes are strictly needed for it, */
-/* but ensure other elements flow correctly. */
-
-/* Optional: Adjust overall controls container height if the table makes it too tall */
-/* .controls-container {
-    max-height: calc(100vh - 40px); /* This existing rule should still work well */
-/* } */
-
-/* Remove style for navigation-controls as it is removed */
-/*
-.navigation-controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.record-indicator {
-    font-size: 14px;
-    color: #555;
-    font-weight: 500;
-    text-align: center;
-    flex-grow: 1;
-    background-color: #f0f0f0;
-    padding: 6px 10px;
-    border-radius: 4px;
-}
-.nav-button {
-    min-width: 80px;
-    flex: 1;
-}
-*/
-
-
-/* ===== A4 SHEET STYLING (UNCHANGED) ===== */
 .a4-sheet {
     background-color: white;
     width: 210mm;
@@ -427,7 +389,7 @@ body {
 .title-with-line h2,
 .title-without-line h2,
 .title-without-line h3 {
-    display: flex; /* Kept for title + add button alignment */
+    display: flex; 
     align-items: center;
     gap: 8px; 
 }
@@ -475,34 +437,33 @@ body {
     margin-bottom: 8px;
 }
 
-/* === LIST ITEM STYLING WITH BULLETS (FIXED INDENTATION) === */
 .list-content ul {
-    list-style-type: none; /* Custom bullets will be used */
-    padding-left: 20px;     /* Indent the entire list block. Adjust as needed. */
+    list-style-type: none; 
+    padding-left: 20px;     
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .list-content ul li {
     display: flex;
-    align-items: flex-start; /* Align bullet and text to the top */
+    align-items: flex-start; 
     margin-bottom: 8px;
     color: black;
 }
 
 .list-content ul li::before {
-    content: "\2022";      /* Bullet character • */
+    content: "\2022";     
     color: black;
-    font-weight: normal;  /* Use normal weight for standard bullet look, or bold if preferred */
-    margin-right: 0.7em;   /* Space between bullet and text content of li */
-    line-height: 1.5;      /* Match span's line-height for better vertical alignment */
-    flex-shrink: 0;        /* Prevent bullet from shrinking */
+    font-weight: normal;  
+    margin-right: 0.7em;   
+    line-height: 1.5;     
+    flex-shrink: 0;        
 }
 
 .list-content ul li span[contenteditable="true"] {
     flex-grow: 1;
     min-width: 0;
-    line-height: 1.5;      /* Consistent line height */
+    line-height: 1.5;     
 }
 
 .list-content ul li:last-child {
@@ -618,8 +579,8 @@ body {
     display: inline-block;
     border: 1px solid #ddd;
     border-radius: 4px;
-    background-color: #f0f0f0; /* Placeholder background */
-    overflow: hidden; /* Ensures rounded corners clip the image */
+    background-color: #f0f0f0; 
+    overflow: hidden; 
 }
 
 .image-item-wrapper img {
@@ -687,7 +648,6 @@ body {
 }
 
 
-/* Sizing for images in #endOfDocumentImagesContainer */
 #endOfDocumentImagesContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
@@ -695,11 +655,10 @@ body {
 }
 
 #endOfDocumentImagesContainer .image-item-wrapper {
-    width: 100%; /* Takes the width from the grid column */
+    width: 100%; 
     height: 180px; 
 }
 
-/* Responsive adjustments */
 @media (max-width: 1200px) {
     .main-container {
         flex-direction: column;
@@ -741,14 +700,11 @@ body {
     }
 
     .a4-sheet {
-        width: 210mm; /* Or 100% if you want it to adapt to a parent, then html2pdf controls PDF width */
-        /* REMOVE OR COMMENT OUT THIS LINE: height: 297mm; */
-        /* Let content determine the height for html2canvas capture */
-        padding: 20mm; /* Your padding is fine, it's internal to the element */
+        width: 210mm;
+        padding: 20mm; 
         box-shadow: none;
         box-sizing: border-box;
-        /* min-height and page-break-after are generally fine */
-        min-height: initial; /* Or remove if not specifically needed for print layout */
+        min-height: initial;
     }
     
     .document-header {
@@ -802,14 +758,13 @@ body {
     
     .image-item-wrapper {
         border: 0.5pt solid #ccc;
-        background-color: transparent; /* No placeholder bg in print */
+        background-color: transparent;
     }
 
     .image-item-wrapper img { 
-        object-fit: contain; /* Better for print to see whole image */
+        object-fit: contain;
     }
 
-    /* Print sizing for #featuresImagesContainer images */
     #featuresImagesContainer .image-item-wrapper {
          max-width: 60mm; 
          max-height: 60mm;
@@ -821,24 +776,23 @@ body {
         height: auto;
         max-height: 80mm;
     }
-    #featuresImagesContainer:has(.image-item-wrapper:first-child:nth-last-child(2)) .image-item-wrapper { /* 2 items */
+    #featuresImagesContainer:has(.image-item-wrapper:first-child:nth-last-child(2)) .image-item-wrapper { 
         max-width: calc(50% - 2.5mm); 
         height: auto;
         max-height: 70mm;
     }
-    #featuresImagesContainer:has(.image-item-wrapper:first-child:nth-last-child(3)) .image-item-wrapper { /* 3 items */
+    #featuresImagesContainer:has(.image-item-wrapper:first-child:nth-last-child(3)) .image-item-wrapper { 
         max-width: calc(33.333% - 3.5mm); 
         height: auto;
         max-height: 60mm;
     }
 
-    /* Print sizing for #endOfDocumentImagesContainer images */
     #endOfDocumentImagesContainer {
         grid-template-columns: repeat(auto-fill, minmax(50mm, 1fr)); 
     }
     #endOfDocumentImagesContainer .image-item-wrapper {
         height: 50mm; 
-        width: 100%; /* Will take column width */
+        width: 100%;
     }
 
 
@@ -846,4 +800,45 @@ body {
         size: A4;
         margin: 0; 
     }
+}
+
+.genre-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; 
+}
+
+.csv-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151; 
+  display: block; 
+}
+
+
+select.csv-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif; 
+  color: #1f2937;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db; 
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px;
+}
+
+select.csv-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
