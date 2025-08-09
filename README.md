@@ -474,7 +474,7 @@ const parseCSVWithEncoding = (file) => {
 This tool integrates seamlessly with the OTMT ecosystem:
 
 - **[Main Website](https://github.com/devan1shX/TMTO)** - QR codes link to technology pages
-- **[Admin Portal](https://github.com/devan1shX/OTMT-ADMIN-FRONTEND)** - Export technology data for brochures
+- **[Admin Portal](https://github.com/devan1shX/Admin-Frontend)** - Export technology data for brochures
 - **[Backend API](https://github.com/devan1shX/TMTO-Backend)** - Fetch live technology data
 
 ## 📞 Support & Contact
@@ -495,3 +495,4 @@ This tool integrates seamlessly with the OTMT ecosystem:
   <h4>🎨 Transforming Data into Beautiful Brochures</h4>
   <p><em>Empowering OTMT with professional marketing materials at the click of a button</em></p>
 </div>
+
